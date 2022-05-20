@@ -1,0 +1,159 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+#navbar{
+    display: flex;
+    width: 100%;
+    height: 70px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 10px 30px;
+    box-sizing: border-box;
+    z-index: 100000000000000000000;
+
+}
+
+.navbar ul{
+    display: flex;
+    list-style: none;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+}
+
+.navbar ul li{
+    padding: 0px 14px;
+    position: relative;
+}
+
+.navbar ul li a{
+    text-decoration: none;
+    color: rgb(20, 19, 19);
+    font-size: 1em;
+    font-weight: 500;
+}
+
+.navbar ul li a:hover{
+    color: red;
+    font-size: 1.1em;
+    transition: 0.3s;
+    font-weight: 600;
+}
+
+.navbar ul li a.active{
+    color: red;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+.navbar ul li a.active::after,
+.navbar ul li a:hover::after{
+    content: "";
+    width: 35%;
+    height: 3px;
+    bottom: -4px;
+    left: 15px;
+    background-color: red;
+    position: absolute;
+
+}
+
+
+
+.navbar #logo{
+    float:left;
+    width: 25%;
+    padding: 12px 30px;
+}
+
+.navbar #right_controls{
+    float:right;
+    width: 25%;
+    padding: 14px 30px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.navbar #right_controls ul li a{
+    color: white;
+}
+
+.navbar #right_controls ul li a:hover{
+    color: red;
+}
+
+#main_body{
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+}
+
+
+#main_body #welcome_text{
+    width:45%;
+    float: left;
+    margin-top: 70px;
+    align-items: flex-end;
+    justify-content: center;
+    display:flex;
+    flex-direction: column;
+    padding-bottom: 100px;
+}
+
+
+
+
+#welcome_text #large_welcome_text{
+    font-size: 10vw;
+    font-weight: 500;
+    color: red;
+    font-family: Sofia;
+}
+
+#welcome_text #large_welcome_text:hover{
+    font-size:10.6vw;
+    transition: 0.3s;
+}
+
+#welcome_image_bg{
+    height: 70%;
+    width: 33%;
+    margin-left: 54%;
+    margin-top: 10px;
+    background-color: rgb(218, 10, 10); /* rgb(216, 62, 6)*/
+    box-sizing: border-box;
+    border: 15px solid white;
+    border-radius: 100%;
+    position: absolute;
+}
+
+#burger{
+    height: 57%;
+    width: 37%;
+    z-index: 999;
+    margin-left: 3%;
+}
+
+#burger:hover~#welcome_image_bg{
+    margin-left: 55%;
+    transition:0.4s;
+}
+
+#burger:hover{
+    margin-left: 2%;
+    transition: 0.3s;
+}
+
+
+/* featured_items */
+
+

@@ -1,0 +1,12 @@
+{% extends "main/base.html" %}
+
+{% block title %} Cart Page {% endblock %}
+
+{% block content%}
+    {% for cart_item in items.all%}
+        <p>{{cart_item.product.name}}  price:{{cart_item.price}} Quantity:{{cart_item.quantity}} Total:{{cart_item.total}}</p> 
+    {% endfor %}
+    <p>Total: {{total}}</p>
+    <p><a href="/checkout">Buy All</a></p>
+   
+{%endblock %}

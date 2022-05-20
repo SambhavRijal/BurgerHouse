@@ -1,0 +1,122 @@
+#featured{
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    display: flex;    
+    flex-direction: column;     
+    align-items: center;
+    justify-content: center; 
+}
+
+#featured_title{
+    font-size: 3.2rem;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin-top: 2%;
+}
+
+#menu_stuff{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow: hidden;
+
+}
+
+
+.menu_item{
+    width: 28%;
+    min-width: 350px;
+    overflow: hidden;
+    max-height: 37vh;
+    min-height: 37vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    float: left;
+    border: 1px solid grey;
+    border-radius: 20px;
+    margin: 20px;
+    transition: 0.2s;
+}
+
+.menu_item:hover{
+    max-width: 30%;
+    min-width: 320px;
+    max-height: 38vh;
+    min-height: 38vh;
+
+
+}
+
+.menu_img{
+    height: 160px;
+    max-height: 200px;
+    overflow: hidden;
+    margin-top: -3%;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    margin-top: -30px;
+}
+
+.img{
+    border-radius: 20px;
+    background-color: rgb(187, 174, 174);
+
+}
+
+.menu_itm_desc{
+    font-size: 20px;
+    font-weight: 600;;
+    display: flex;
+    flex-direction: column;
+    height: 7vh;
+    width: 95%;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: -20px;
+    margin-bottom: 10px;
+}
+
+.menu_itm_desc .menu_desc{
+    text-decoration: none;
+    color: black;
+    display: flex;
+    justify-content: space-between;
+}
+
+.cart_button{
+    width: 100%;
+    border: none;
+    border-radius: 15px;
+    height: 7vh;
+    background-color: rgba(255, 68, 0, 0.973);
+    color: wheat;
+    font-size: 20px;
+    transition: 0.2s;
+    padding: 3px;
+    margin-bottom:0;
+}
+
+.cart_button:hover{
+    background-color: rgb(184, 75, 11);
+    font-size: 22px;
+}
+
+.cart_button a{
+    text-decoration: none;
+    color: white;
+}
+
+#menu_link{
+    max-height: 20%;
+    min-height: 67%;
+    display: block;
+    width: 100%;
+}

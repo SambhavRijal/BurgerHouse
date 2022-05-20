@@ -1,0 +1,50 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+
+{% block title %} Home Page {% endblock %}
+
+
+{% block css %}
+    <style> 
+        
+    </style>
+{% endblock %}
+
+
+{% block content%}
+
+    <section id="main_body" style=" background-image: url('{% static 'images/bg.png' %}')">
+        <div id="welcome_text">
+            <span style="font-family: 'Beau Rivage', cursive ; font-size: 40px; font-weight: 500; margin-bottom: -6%;
+            ">Delight your</span>
+            <span id="large_welcome_text">Hunger!</span>
+            <span>Roast Chicken Burger with</span>
+            <span>Fries and a Cola Can</span>
+        </div>
+        <img id="burger" src="{% static 'images/burger.png' %}" alt="Image not available">
+        <div id="welcome_image_bg">
+        </div>
+    </section>
+
+    
+    <section id="featured">
+        <p id="featured_title">Our Popular Picks</p>
+        <div id="menu_stuff">
+            {% for featured_item in items.all%}
+            <div class="menu_item">
+                <a href="menu/food{{featured_item.id}}" id="menu_link">
+                    <div class="menu_img" style=" background-image: url('{% static 'images/frenchfries.jpg' %}')"></div>
+                </a>
+                <div class="menu_itm_desc" style="margin-left: 3px; margin-right: 3px;">
+                    <a href="menu/food{{featured_item.id}}" class="menu_desc"><span><p>{{featured_item.name}}</p><p style="font-weight: 200; font-size: 17px; padding-top: 2px; color: grey; margin-top: -21px;">{{featured_item.category}}</p></span> <span>Rs {{featured_item.price}}</span></a>  
+                </div> 
+                <button class="cart_button"><a href="/addtocart{{featured_item.id}}">Add to Cart</a></button>   
+            </div>
+            
+            {% endfor %}
+        </div>
+    </section>
+    
+
+{%endblock %}
