@@ -35,11 +35,12 @@
             <div class="menu_item">
                 <a href="menu/food{{featured_item.id}}" id="menu_link">
                     <div class="menu_img" style=" background-image: url('{% static 'images/frenchfries.jpg' %}')"></div>
+                    <button class="cart_button"><a href="/addtocart{{featured_item.id}}">Cart</a></button> 
                 </a>
                 <div class="menu_itm_desc" style="margin-left: 3px; margin-right: 3px;">
-                    <a href="menu/food{{featured_item.id}}" class="menu_desc"><span><p>{{featured_item.name}}</p><p style="font-weight: 200; font-size: 17px; padding-top: 2px; color: grey; margin-top: -21px;">{{featured_item.category}}</p></span> <span>Rs {{featured_item.price}}</span></a>  
+                    <a href="menu/food{{featured_item.id}}" class="menu_desc"><span><p>{{featured_item.name}}</p><p style="font-weight: 200; font-size: 17px; padding-top: 2px; color: grey; margin-top: -21px;">{{featured_item.category}}</p></span> <span>Rs {{featured_item.price}}</span></a>   
                 </div> 
-                <button class="cart_button"><a href="/addtocart{{featured_item.id}}">Add to Cart</a></button>   
+                  
             </div>
             
             {% endfor %}

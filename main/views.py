@@ -50,6 +50,26 @@ def addtocart(request,id):
     return redirect("/menu/")
 
 
+def cartdelete(request,id):
+    Cart.objects.filter(id=id).delete()
+    return redirect("/cart/")
+
+
+def cartedit(request,id):
+    item=Cart.objects.get(id=id)
+
+    if request.method=="POST":
+        item.quantity=request.POST.get("quantity")
+        print("Quantity=",item.quantity, "Price = ",item.price)
+        item.total=int(item.price)*int(item.quantity)
+        print("Total",item.total)
+        item.save()
+        return redirect("/cart/")
+    else:
+        return render(request,'main/cartedit.html',{'item':item})
+
+
+
 # Purchase
 def checkout(request):
     cart_items=Cart.objects.filter(user=request.user)

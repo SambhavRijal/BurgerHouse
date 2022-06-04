@@ -1,0 +1,53 @@
+{% extends "main/base.html" %}
+
+{% block title %} Cart Edit {% endblock %}
+
+{% block css %}
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 20px;
+
+        }
+        
+        table{
+            margin-top: 6%;
+            width: 80%;
+            margin-left: 10%;
+            margin-right: 10%;
+            margin-bottom:10%;
+            border-spacing: 10px;
+        }
+    </style>
+{% endblock %}
+
+
+{% block content%}
+<form method="POST" action="/cartedit{{item.id}}/">
+    {% csrf_token %}
+    <table style='border-collapse: separate; border-spacing: 10px !important;'>
+        <thead>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a href="/menu/food{{item.product.id}}"> {{item.product.name}}</a></td>
+                <td>{{item.product.price}}</td>
+                <td><input type="number" name="quantity" value="{{item.quantity}}"></td>
+                <td>{{item.total}} <span style="float: right;"> <a href="/cartdelete{{item.id}}">Delete</a></span></td>
+            </tr>
+            <tr>
+                <td colspan="1" style="text-align: end;">Total</td>
+                <td colspan="2">{{total}}</td>
+                <td><input type="submit" value="save"></td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+{% endblock %}

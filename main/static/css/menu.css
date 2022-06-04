@@ -29,40 +29,36 @@
 
 
 .menu_item{
+    position: relative;
     width: 28%;
     min-width: 350px;
     overflow: hidden;
-    max-height: 37vh;
-    min-height: 37vh;
+    max-height: 350px;
+    min-height: 40vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     float: left;
     border: 1px solid grey;
-    border-radius: 20px;
+    border-radius: 10px;
     margin: 20px;
     transition: 0.2s;
 }
 
 .menu_item:hover{
     max-width: 30%;
-    min-width: 320px;
-    max-height: 38vh;
-    min-height: 38vh;
-
-
 }
 
 .menu_img{
-    height: 160px;
-    max-height: 200px;
+    height: 30vh;
+    max-height: 30vh;
     overflow: hidden;
     margin-top: -3%;
     width: 100%;
     background-size: cover;
     background-position: center;
-    margin-top: -30px;
+    margin-bottom: 100px;
+    
 }
 
 .img{
@@ -76,15 +72,18 @@
     font-weight: 600;;
     display: flex;
     flex-direction: column;
-    height: 7vh;
+    height: 9vh;
     width: 95%;
     padding-left: 10px;
     padding-right: 10px;
-    margin-top: -20px;
-    margin-bottom: 10px;
+    margin-top: 20px;
+    margin-bottom: -150px;
+    overflow: hidden;
+   
 }
 
 .menu_itm_desc .menu_desc{
+    position: relative;
     text-decoration: none;
     color: black;
     display: flex;
@@ -92,16 +91,22 @@
 }
 
 .cart_button{
-    width: 100%;
+    position: absolute;
+    top: 125px;
+    left: 320px;
+
     border: none;
-    border-radius: 15px;
+    border-radius: 50px;
     height: 7vh;
     background-color: rgba(255, 68, 0, 0.973);
     color: wheat;
     font-size: 20px;
     transition: 0.2s;
     padding: 3px;
-    margin-bottom:0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .cart_button:hover{
@@ -112,6 +117,7 @@
 .cart_button a{
     text-decoration: none;
     color: white;
+  
 }
 
 #menu_link{
