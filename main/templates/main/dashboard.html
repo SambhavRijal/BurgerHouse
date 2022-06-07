@@ -1,0 +1,78 @@
+{% extends "main/base.html" %}
+
+{% block title %} Cart Page {% endblock %}
+
+{% block css %}
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 20px;
+
+        }
+        
+        table{
+            margin-top: 6%;
+            width: 90%;
+            margin-left: 5%;
+            margin-right: 5%;
+            margin-bottom:10%;
+            border-spacing: 10px;
+        }
+    </style>
+{% endblock %}
+
+
+{% block content%}
+<table style='border-collapse: separate; border-spacing: 10px !important;'>
+    <thead>
+        <th>Name</th>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Total</th>
+        <th>Status</th>
+        <th>Province</th>
+        <th>District</th>
+        <th>Town</th>
+        <th>Area</th>
+    </thead>
+    <tbody>
+        {% for cart_item in orders.all%}
+            <tr>
+                <td>{{cart_item.user.username}}</td>
+                <td><a href="/menu/food{{cart_item.product.id}}"> {{cart_item.product.name}}</a></td>
+                <td>{{cart_item.price}}</td>
+                <td>{{cart_item.quantity}}</td>
+                <td>{{cart_item.total}}</td>
+                <td>{{cart_item.status}}</td>
+                <td>{{cart_item.province}}</td>
+                <td>{{cart_item.district}}</td>
+                <td>{{cart_item.town}}</td>
+                <td>{{cart_item.area}}</td>
+                <td><span style="float: right;">
+                    {% if role == 'customer' %}
+                        <a href="/deleteorder{{cart_item.id}}">Cancle</a></span></td>
+                    {% endif %}
+
+                    {% if role == 'branch' %}
+                        <a href="/changestate{{cart_item.id}}st{{1}}">Cooked</a>
+                        <a href="/deleteorder{{cart_item.id}}">Delete</a></span></td>
+                    {% endif %}
+
+                    {% if role == 'delivery' %}
+                        {% if cart_item.status == 'cooked' %}
+                            <a href="/changestate{{cart_item.id}}st{{2}}">delivering</a>
+                        {% endif %}
+                        {% if cart_item.status == 'delivering' %}
+                            <a href="/changestate{{cart_item.id}}st{{3}}">delivered</a>
+                        {% endif %}    
+                    {% endif %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+   
+{% endblock %}

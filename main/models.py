@@ -30,4 +30,18 @@ class Order(models.Model):
     price=models.IntegerField(default=0)
     total=models.IntegerField(default=0)
     time=models.DateTimeField(auto_now_add=True)
+    province=models.IntegerField(default=3)
+    district=models.CharField(max_length=200,default='bhaktapur')
+    town=models.CharField(max_length=200,default='thimi')
+    area=models.CharField(max_length=200,default='main road')
+    status=models.CharField(max_length=50,default='processing')
+
+
+class UserDetails(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    role=models.CharField(max_length=20,default='customer')
+    province=models.IntegerField(default=3)
+    district=models.CharField(max_length=200,default='Bhaktapur')
+    town=models.CharField(max_length=200,default='Thimi')
+    area=models.CharField(max_length=200,default='main road')
 

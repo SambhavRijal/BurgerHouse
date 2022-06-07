@@ -1,0 +1,62 @@
+{% extends "main/base.html" %}
+
+{% block title %} User Details {% endblock %}
+
+{% block css %}
+    <style>
+        form{
+            border: 1px solid red;
+            margin-top: 5%;
+            margin-bottom: 5%;
+            width: 80%;
+            margin-left:10%;
+            margin-right:10%;        }
+    </style>
+{% endblock %}
+
+
+{% block content%}
+    <form method="post" action="/details/">
+        {% csrf_token %}
+        <label>Province</label>
+        <select name="province">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+        </select>
+        <br>
+        <label>District</label>
+        <select name="district">
+            <option value="kathmandu">Kathmandu</option>
+            <option value="bhaktapur">Bhaktapur</option>
+            <option value="lalitpur">Lalitpur</option>
+            <option value="kavre">Kavre</option>
+            <option value="nuwakot">Nuwakot</option>
+            <option value="dhadhing">Dhadhing</option>
+            <option value="sindhupalchowk">Sindhupakchowk</option>
+        </select>
+        <br>
+        <label>Town</label>
+        <select name="town">
+            <option value="new road">New Road</option>
+            <option value="thimi">Thimi</option>
+            <option value="lagankhel">Lagankhhel</option>
+            <option value="banepa">Banepa</option>
+            <option value="bidur">Bidur</option>
+            <option value="dhadhing besi">Dhadhing Besi</option>
+            <option value="chautara">Chautara</option>
+        </select>
+        <br>
+        <label>Detail</label>
+        <textarea name="area" rows="5" cols="20" placeholder="Give description of your location"></textarea>
+        <br>
+        <input type="submit" value="Done">
+
+
+    </form>
+   
+{% endblock %}

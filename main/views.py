@@ -2,22 +2,33 @@ from itertools import product
 from django.http.request import HttpRequest
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from .models import Item,Cart, Order
+from .models import Item,Cart,Order,UserDetails 
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.forms import UserCreationForm
 from .forms import RegisterUser
 from django.contrib.auth.models import User
 from django.db.models import Sum
+from django.db.models import Q     
 
 # Create your views here.
 
 def index(request):
     items=Item.objects.filter(featured=1)
-    return render(request,'main/index.html',{'items':items})
+    if request.user.is_active:
+        print("User is active")
+        existing_detail=UserDetails.objects.filter(user=request.user).count()
+        if existing_detail==1:
+            print("Detaisl exist")
+            return render(request,'main/index.html',{'items':items})
+        else:
+            return redirect("/details/") 
+    else:
+        return render(request,'main/index.html',{'items':items})
 
 def menu(request):
     items=Item.objects.all()
     return render(request,'main/menu.html',{'items':items})
+
 
 def food(request,id):
     item=Item.objects.get(id=id)
@@ -32,6 +43,7 @@ def cart(request):
         total=total+item.total
         print(total)
     return render(request,'main/cart.html',{'items':cart_items,'total':total})
+
 
 def addtocart(request,id):
     count=Cart.objects.filter(product=Item.objects.get(id=id),user=request.user).count()
@@ -69,15 +81,21 @@ def cartedit(request,id):
         return render(request,'main/cartedit.html',{'item':item})
 
 
-
 # Purchase
 def checkout(request):
     cart_items=Cart.objects.filter(user=request.user)
+    user=UserDetails.objects.get(user=request.user)
+    province=user.province
+    district=user.district
+    town=user.town
+    area=user.area
+
     for item in cart_items:
-        order=Order.objects.create(user=request.user,product=item.product,quantity=item.quantity,price=item.price,total=item.total)
+        order=Order.objects.create(user=request.user,product=item.product,quantity=item.quantity,price=item.price,total=item.total,province=province, district=district, town=town, area=area)
         order.save()
     cart_items.delete()
     return redirect("/")
+
 
 # User Register
 def register(request):
@@ -89,3 +107,59 @@ def register(request):
 
     form=RegisterUser()
     return render(request,"main/register.html",{'form':form})
+
+
+def details(request):
+    if request.method=="POST":
+        province=request.POST.get("province")
+        district=request.POST.get("district")
+        town=request.POST.get("town")
+        area=request.POST.get("area")
+        detail=UserDetails.objects.create(user=request.user,province=province,district=district,town=town,area=area)
+        detail.save()
+        return redirect("/")
+    else:
+        return render(request,'main/details.html')
+
+# Dashboard
+def dashboard(request,id):
+    person=UserDetails.objects.get(user=request.user)
+    role=person.role
+    branch_town=UserDetails.objects.get(user=request.user)
+    town=branch_town.town
+    if role=="branch":
+        #customers=UserDetails.objects.filter(town=town)
+        orders=Order.objects.filter(town=town,status="processing")
+        return render(request,"main/dashboard.html",{'orders':orders,'role':role})
+
+    elif role=="customer":
+        orders=Order.objects.filter(user=request.user)
+        return render(request,"main/dashboard.html",{'orders':orders,'role':role})
+
+    elif role=="delivery":
+        orders=Order.objects.filter(Q(status='cooked') | Q(status='delivering'),town=town)
+        return render(request,"main/dashboard.html",{'orders':orders,'role':role})
+
+    else:
+        return redirect("/")
+        
+
+def deleteorder(request,id):
+    Order.objects.get(id=id).delete()
+    return redirect(dashboard,id=request.user.id)
+
+def changestate(request,id,state):
+    order=Order.objects.get(id=id)
+    print("Inside changestate")
+    print("State is",state)
+    # state: 0=> processing   1=>cooked   2=>Delivering  3=>Delivered
+    if state==1:
+        order.status='cooked'
+    elif state==2:
+        order.status='delivering'
+    elif state==3:
+        order.status='delivered'
+    else:
+        order.status='processing'
+    order.save()
+    return redirect(dashboard,id=request.user.id)
