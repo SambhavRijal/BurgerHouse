@@ -5,12 +5,12 @@
 {% block css %}
     <style>
         form{
-            border: 1px solid red;
-            margin-top: 5%;
+            
+            margin-top: 10%;
             margin-bottom: 5%;
-            width: 80%;
-            margin-left:10%;
-            margin-right:10%;        }
+            width: 50%;
+            margin-left:25%;
+            margin-right:25%;        }
     </style>
 {% endblock %}
 
@@ -18,8 +18,8 @@
 {% block content%}
     <form method="post" action="/details/">
         {% csrf_token %}
-        <label>Province</label>
-        <select name="province">
+        <label for="province" class="form-label">Province</label>
+        <select name="province" class="form-select" aria-label="Default select example" id="province">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -29,8 +29,8 @@
             <option value="7">7</option>
         </select>
         <br>
-        <label>District</label>
-        <select name="district">
+        <label for="district" class="form-label">District</label>
+        <select name="district" class="form-select" aria-label="Default select example" id="district">
             <option value="kathmandu">Kathmandu</option>
             <option value="bhaktapur">Bhaktapur</option>
             <option value="lalitpur">Lalitpur</option>
@@ -40,8 +40,8 @@
             <option value="sindhupalchowk">Sindhupakchowk</option>
         </select>
         <br>
-        <label>Town</label>
-        <select name="town">
+        <label for="town" class="form-label">Town</label>
+        <select name="town" class="form-select" aria-label="Default select example" id="town">
             <option value="new road">New Road</option>
             <option value="thimi">Thimi</option>
             <option value="lagankhel">Lagankhhel</option>
@@ -51,10 +51,10 @@
             <option value="chautara">Chautara</option>
         </select>
         <br>
-        <label>Detail</label>
-        <textarea name="area" rows="5" cols="20" placeholder="Give description of your location"></textarea>
+        <label for="exampleFormControlTextarea1" class="form-label">Detail</label>
+        <textarea name="area" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Give description of your location"></textarea>
         <br>
-        <input type="submit" value="Done">
+        <input type="submit" value="Done" class="btn btn-danger">
 
 
     </form>

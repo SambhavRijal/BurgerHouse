@@ -11,6 +11,7 @@ urlpatterns=[
     path("cart/",views.cart,name="cart"),
     path("addtocart<int:id>/",views.addtocart,name="addtocart"),
     path("checkout/",views.checkout,name="checkout"),
+    path("purchase<int:id>/",views.purchase,name="purchase"),
     path("cartdelete<int:id>/",views.cartdelete,name="cartdelete"),
     path("cartedit<int:id>/",views.cartedit,name="cartedit"),
     path("details/",views.details,name="details"),

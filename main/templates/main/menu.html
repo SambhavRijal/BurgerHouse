@@ -6,13 +6,16 @@
 
 
 {% block content%}
+    <p id="featured_title">Menu</p>
     <section id="featured">
-        <p id="featured_title">Menu</p>
         <div id="menu_stuff">
             {% for item in items.all%}
             <div class="menu_item">
                 <a href="food{{item.id}}" id="menu_link">
-                    <div class="menu_img" style=" background-image: url('{% static 'images/frenchfries.jpg' %}')"></div>
+                    {% if item.image %}
+                    <img class="menu_img" src="{{item.image.url}}" alt="no image">
+                    {% endif %}
+               
                 </a>
                 <div class="menu_itm_desc" style="margin-left: 3px; margin-right: 3px;">
                     <a href="food{{item.id}}" class="menu_desc"><span><p>{{item.name}}</p><p style="font-weight: 200; font-size: 17px; padding-top: 2px; color: grey; margin-top: -21px;">{{item.category}}</p></span> <span>Rs {{item.price}}</span></a>  

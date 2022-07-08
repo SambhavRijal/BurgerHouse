@@ -7,7 +7,70 @@
 
 {% block css %}
     <style> 
-        
+        .navbar #right_controls ul li a{
+                color: white;
+            }
+
+        .navbar #right_controls .navul li .btn-group a{
+            color: black;
+        }
+
+
+        .column {
+  float: left;
+  width: 33.3%;
+  margin-bottom: 16px;
+  padding: 0 8px;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: 8px;
+}
+
+.about-section {
+  padding: 50px;
+  text-align: center;
+  background-color: #474e5d;
+  color: white;
+}
+
+.container {
+  padding: 0 16px;
+}
+
+.container::after, .row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.title {
+  color: grey;
+}
+
+.button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.button:hover {
+  background-color: #555;
+}
+
+@media screen and (max-width: 650px) {
+  .column {
+    width: 100%;
+    display: block;
+  }
+}
     </style>
 {% endblock %}
 
@@ -28,13 +91,16 @@
     </section>
 
     
-    <section id="featured">
-        <p id="featured_title">Our Popular Picks</p>
+    <section id="featured" style="margin-top: -70px;">
+        <p id="featured_title" style="margin-left:-10px">Our Popular Picks</p>
         <div id="menu_stuff">
             {% for featured_item in items.all%}
             <div class="menu_item">
                 <a href="menu/food{{featured_item.id}}" id="menu_link">
-                    <div class="menu_img" style=" background-image: url('{% static 'images/frenchfries.jpg' %}')"></div>
+                  {% if featured_item.image %}
+                    <img class="menu_img" src="{{featured_item.image.url}}" alt="no image">
+                  {% endif %}
+             
                     <button class="cart_button"><a href="/addtocart{{featured_item.id}}">Cart</a></button> 
                 </a>
                 <div class="menu_itm_desc" style="margin-left: 3px; margin-right: 3px;">
@@ -47,5 +113,51 @@
         </div>
     </section>
     
+    <div class="about-section" id="about" style="margin-top:80px; margin-bottom: 50px;">
+        <h1>About Us</h1>
+        <p></p>
+        <p>We are Nepals largest Resturant Chain.</p>
+        <p>Existing in major cities, Burgerhouse and Crunchy Fried Chicken is ready to provide you with delicious food whenever and wherever you are.</p>
+        <p>Visit the branch near you</p>
+      </div>
+      
+      <h2 style="text-align:center">Checkout Some Reviews</h2>
+      <div class="row" style="width:80%; margin-left: 10%; margin-right:10%">
+        <div class="column" style="padding: 20px;">
+          <div class="card" style="border-radius:20px;">
+            <img src="{% static 'images/girl1.jpg' %}" alt="Jane" style="width:100%; height:380px">
+            <div class="container">
+              <h2>Jane Doe</h2>
+              <p class="title">CEO & Founder</p>
+              <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+              <p>jane@example.com</p>
+            </div>
+          </div>
+        </div>
+      
+        <div class="column" style="padding: 20px;">
+          <div class="card" style="border-radius:20px;">
+            <img src="{% static 'images/guy1.jpg' %}" alt="Mike" style="width:100%;  height:380px">
+            <div class="container">
+              <h2>Mike Ross</h2>
+              <p class="title">Art Director</p>
+              <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+              <p>mike@example.com</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="column" style="padding: 20px;">
+          <div class="card" style="border-radius:20px;">
+            <img src="{% static 'images/guy2.jpg' %}" alt="John" style="width:100%; height:380px">
+            <div class="container">
+              <h2>John Doe</h2>
+              <p class="title">Designer</p>
+              <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+              <p>john@example.com</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
 {%endblock %}

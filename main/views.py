@@ -18,9 +18,10 @@ def index(request):
         print("User is active")
         existing_detail=UserDetails.objects.filter(user=request.user).count()
         if existing_detail==1:
-            print("Detaisl exist")
+            print("Details exist")
             return render(request,'main/index.html',{'items':items})
         else:
+            print("Details doesnt exist"+str(existing_detail))
             return redirect("/details/") 
     else:
         return render(request,'main/index.html',{'items':items})
@@ -82,6 +83,19 @@ def cartedit(request,id):
 
 
 # Purchase
+
+def purchase(request,id):
+    item=Item.objects.get(id=id)
+    user=UserDetails.objects.get(user=request.user)
+    province=user.province
+    district=user.district
+    town=user.town
+    area=user.area
+    order=Order.objects.create(user=request.user,product=item,quantity=1,price=item.price,total=item.price,province=province, district=district, town=town, area=area)
+    order.save()
+
+    return render(request,'main/food.html',{'item':item})
+
 def checkout(request):
     cart_items=Cart.objects.filter(user=request.user)
     user=UserDetails.objects.get(user=request.user)
@@ -133,7 +147,7 @@ def dashboard(request,id):
         return render(request,"main/dashboard.html",{'orders':orders,'role':role})
 
     elif role=="customer":
-        orders=Order.objects.filter(user=request.user)
+        orders=Order.objects.filter(user=request.user).order_by('-time')
         return render(request,"main/dashboard.html",{'orders':orders,'role':role})
 
     elif role=="delivery":

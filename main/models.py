@@ -12,6 +12,7 @@ class Item(models.Model):
     category=models.CharField(max_length=200,default='snacks')
     description=models.CharField(max_length=500,default='Tasty Food')
     featured=models.BooleanField()
+    image = models.ImageField(upload_to='images/',default='images/uwp540709.jpeg')
 
     def __str__(self):
         return self.name

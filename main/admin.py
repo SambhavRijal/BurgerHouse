@@ -4,7 +4,7 @@ from .models import Item,Cart,Order, UserDetails
 # Register your models here.
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('name', 'price','featured')
+    list_display = ('name', 'price','featured','image')
 
 class CartAdmin(admin.ModelAdmin):
     list_display=('user','product','price','quantity','total')

@@ -1,32 +1,22 @@
 {% extends "main/base.html" %}
 
-{% block title %} Cart Page {% endblock %}
+{% block title %} Dashboard {% endblock %}
 
 {% block css %}
-    <style>
-        table, th, td {
-            border: 1px solid black;
-        }
-
-        th, td {
-            padding: 20px;
-
-        }
-        
+    <style> 
         table{
             margin-top: 6%;
-            width: 90%;
-            margin-left: 5%;
-            margin-right: 5%;
             margin-bottom:10%;
-            border-spacing: 10px;
+        }
+
+        .navbar #right_controls ul li a{
+            color: black;
         }
     </style>
 {% endblock %}
 
-
 {% block content%}
-<table style='border-collapse: separate; border-spacing: 10px !important;'>
+<table  class="table table-striped table-hover">
     <thead>
         <th>Name</th>
         <th>Item</th>
@@ -54,7 +44,9 @@
                 <td>{{cart_item.area}}</td>
                 <td><span style="float: right;">
                     {% if role == 'customer' %}
-                        <a href="/deleteorder{{cart_item.id}}">Cancle</a></span></td>
+                        {% if cart_item.status == 'processing' %}
+                            <a href="/deleteorder{{cart_item.id}}">Cancle</a></span></td>
+                        {% endif %}
                     {% endif %}
 
                     {% if role == 'branch' %}
@@ -72,6 +64,7 @@
                     {% endif %}
             </tr>
         {% endfor %}
+        <tr id="bottom"></tr>
     </tbody>
 </table>
    
