@@ -126,6 +126,25 @@
     </style>
 {% endblock %}
 
+{% block js %}
+  <script type = "text/javascript">
+    function getConfirmation(location) {
+    var retVal = confirm("Login Before Proceeding");
+    if( retVal == true ) {
+      var position=location;
+      window.location.href = "/rollback"+position;
+      
+        }
+    else{
+
+    } 
+  }
+  
+    
+  </script>
+{% endblock %}
+
+
 {% block content%}
         <main class="container">
  
@@ -153,8 +172,20 @@
                     <span>Rs {{item.price}}</span>
                   </div>
                   <br>
-                  <a href="/addtocart{{item.id}}" class="cart-btn">Add to cart</a> 
-                  <a href="/purchase{{item.id}}"" class="cart-btn">Purchase</a>
+                  
+                  
+                  {% if user.is_authenticated %}
+                  <div class="product-description">
+                    <p>In Cart: {{in_cart}}</p>
+                  </div>
+                  <br>
+                  
+                    <a href="/addtocart{{item.id}}" class="cart-btn">Add to cart</a> 
+                    <a href="/purchase{{item.id}}" class="cart-btn">Purchase</a>
+                  {% else %}
+                    <a href="#" onclick="getConfirmation('{{item.id}}'); return false;" class="cart-btn">Add to cart</a> 
+                    <a href="#" onclick="getConfirmation('{{item.id}}'); return false;" class="cart-btn">Purchase</a>
+                  {% endif %} 
                 </div>
               </main>
 {%endblock %}

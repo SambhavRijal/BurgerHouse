@@ -23,6 +23,7 @@
   padding: 0 8px;
 }
 
+
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   margin: 8px;
@@ -74,6 +75,23 @@
     </style>
 {% endblock %}
 
+{% block js %}
+  <script type = "text/javascript">
+    function getConfirmation(location) {
+    var retVal = confirm("Login Before Proceeding");
+    if( retVal == true ) {
+      var position=location;
+      window.location.href = "/rollback"+position;
+      
+        }
+    else{
+
+    } 
+  }
+  
+    
+  </script>
+{% endblock %}
 
 {% block content%}
 
@@ -100,11 +118,15 @@
                   {% if featured_item.image %}
                     <img class="menu_img" src="{{featured_item.image.url}}" alt="no image">
                   {% endif %}
-             
-                    <button class="cart_button"><a href="/addtocart{{featured_item.id}}">Cart</a></button> 
+                  
+                  {% if user.is_authenticated %}
+                    <button class="cart_button"><a href="/addtocart{{featured_item.id}}"><i class="fas fa-shopping-cart"></i></a></button> 
+                  {% else %}
+                  <button class="cart_button"><a href="#" onclick="getConfirmation('{{featured_item.id}}'); return false;"><i class="fas fa-shopping-cart"></i></a></button>
+                  {% endif %} 
                 </a>
                 <div class="menu_itm_desc" style="margin-left: 3px; margin-right: 3px;">
-                    <a href="menu/food{{featured_item.id}}" class="menu_desc"><span><p>{{featured_item.name}}</p><p style="font-weight: 200; font-size: 17px; padding-top: 2px; color: grey; margin-top: -21px;">{{featured_item.category}}</p></span> <span>Rs {{featured_item.price}}</span></a>   
+                    <a href="menu/food{{featured_item.id}}/" class="menu_desc"><span><p>{{featured_item.name}}</p><p style="font-weight: 200; font-size: 17px; padding-top: 2px; color: grey; margin-top: -21px;">{{featured_item.category}}</p></span> <span>Rs {{featured_item.price}}</span></a>   
                 </div> 
                   
             </div>
@@ -122,15 +144,15 @@
       </div>
       
       <h2 style="text-align:center">Checkout Some Reviews</h2>
-      <div class="row" style="width:80%; margin-left: 10%; margin-right:10%">
+      <div class="row" style="width:80%; margin-left: 10%; margin-right:10%" id="reviews">
         <div class="column" style="padding: 20px;">
           <div class="card" style="border-radius:20px;">
             <img src="{% static 'images/girl1.jpg' %}" alt="Jane" style="width:100%; height:380px">
             <div class="container">
               <h2>Jane Doe</h2>
-              <p class="title">CEO & Founder</p>
-              <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-              <p>jane@example.com</p>
+              <p class="title">Frequent Customer</p>
+              <p>I always order takeout from this place, their food is low price and really high quality making it best for efficient spending.</p>
+              <p>jane@gmail.com</p>
             </div>
           </div>
         </div>
@@ -140,9 +162,9 @@
             <img src="{% static 'images/guy1.jpg' %}" alt="Mike" style="width:100%;  height:380px">
             <div class="container">
               <h2>Mike Ross</h2>
-              <p class="title">Art Director</p>
-              <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-              <p>mike@example.com</p>
+              <p class="title">Ex Employee</p>
+              <p>I used to work here and i gotta tell you, they keep the kitchen and the environment really clean and sanitary.</p>
+              <p>mike@gmail.com</p>
             </div>
           </div>
         </div>
@@ -152,9 +174,9 @@
             <img src="{% static 'images/guy2.jpg' %}" alt="John" style="width:100%; height:380px">
             <div class="container">
               <h2>John Doe</h2>
-              <p class="title">Designer</p>
-              <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-              <p>john@example.com</p>
+              <p class="title">Decorator</p>
+              <p>I made the interior theme for most branches and their management and communication is really good.</p>
+              <p>john@gmail.com</p>
             </div>
           </div>
         </div>

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main.apps.MainConfig', #appnameConfig here appname is main
     'crispy_forms',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [

@@ -1,4 +1,5 @@
 from itertools import product
+import string
 from django.http.request import HttpRequest
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
@@ -13,9 +14,26 @@ from django.db.models import Q
 # Create your views here.
 
 def index(request):
+    if 'location' in request.session:
+        print("test 1")
+        if request.session['location'] !='':
+            location=request.session['location']
+            print("test 2"+location)
+            return redirect("/rollback"+location)
+
     items=Item.objects.filter(featured=1)
     if request.user.is_active:
         print("User is active")
+        person=UserDetails.objects.get(user=request.user)
+        role=person.role
+        id=request.user.id
+        print("id of user is ", id)
+        if role=="branch" or role=="delivery":
+            return redirect("/dashboard"+str(id))
+
+        if request.user.is_superuser==True:
+            return redirect("/admin")
+
         existing_detail=UserDetails.objects.filter(user=request.user).count()
         if existing_detail==1:
             print("Details exist")
@@ -32,8 +50,18 @@ def menu(request):
 
 
 def food(request,id):
-    item=Item.objects.get(id=id)
-    return render(request,'main/food.html',{'item':item})
+    item=Item.objects.get(id=id) 
+    in_cart=0
+    if request.user.is_authenticated:
+        if Cart.objects.filter(user=request.user,product=item).count()==1:
+            in_cart=Cart.objects.get(user=request.user,product=item)
+            in_cart=in_cart.quantity
+            print ("in cart",in_cart)
+        else:
+            in_cart=0
+        return render(request,'main/food.html',{'item':item,'in_cart':in_cart})
+    else:
+        return render(request,'main/food.html',{'item':item})
 
 
 # Cart System
@@ -47,6 +75,7 @@ def cart(request):
 
 
 def addtocart(request,id):
+    product=id
     count=Cart.objects.filter(product=Item.objects.get(id=id),user=request.user).count()
     print("Count=",count)
     if count==1:
@@ -60,7 +89,14 @@ def addtocart(request,id):
         c=Cart.objects.create(user=request.user,product=Item.objects.get(id=id),price=Item.objects.only('price').get(id=id).price,total=Item.objects.only('price').get(id=id).price)
         c.save()
         print("New Entry added")
-    return redirect("/menu/")
+    
+    message="Added to Cart"
+    if request.user.is_active:
+        message="Login Before Purchasing"
+    
+    items=Item.objects.all()
+    return render(request,'main/menu.html',{'items':items,'message':message,'product':product})
+    
 
 
 def cartdelete(request,id):
@@ -94,7 +130,7 @@ def purchase(request,id):
     order=Order.objects.create(user=request.user,product=item,quantity=1,price=item.price,total=item.price,province=province, district=district, town=town, area=area)
     order.save()
 
-    return render(request,'main/food.html',{'item':item})
+    return redirect("/confirmation/")
 
 def checkout(request):
     cart_items=Cart.objects.filter(user=request.user)
@@ -108,7 +144,7 @@ def checkout(request):
         order=Order.objects.create(user=request.user,product=item.product,quantity=item.quantity,price=item.price,total=item.total,province=province, district=district, town=town, area=area)
         order.save()
     cart_items.delete()
-    return redirect("/")
+    return redirect("/confirmation/")
 
 
 # User Register
@@ -143,16 +179,19 @@ def dashboard(request,id):
     town=branch_town.town
     if role=="branch":
         #customers=UserDetails.objects.filter(town=town)
-        orders=Order.objects.filter(town=town,status="processing")
-        return render(request,"main/dashboard.html",{'orders':orders,'role':role})
+        orders=Order.objects.filter(Q(status='placed') | Q(status='confirmed'),town=town)
+        history=Order.objects.filter(town=town,status="delivered")
+        return render(request,"main/dashboard.html",{'orders':orders,'role':role,'history':history})
 
     elif role=="customer":
-        orders=Order.objects.filter(user=request.user).order_by('-time')
-        return render(request,"main/dashboard.html",{'orders':orders,'role':role})
+        orders=Order.objects.filter(Q(status='placed') | Q(status='confirmed') | Q(status='cooked') | Q(status='delivering'),user=request.user).order_by('-time')
+        history=Order.objects.filter(user=request.user,status="delivered").order_by('-time')
+        return render(request,"main/dashboard.html",{'orders':orders,'role':role,'history':history})
 
     elif role=="delivery":
         orders=Order.objects.filter(Q(status='cooked') | Q(status='delivering'),town=town)
-        return render(request,"main/dashboard.html",{'orders':orders,'role':role})
+        history=Order.objects.filter(status='delivered',town=town)
+        return render(request,"main/dashboard.html",{'orders':orders,'role':role,'history':history})
 
     else:
         return redirect("/")
@@ -166,14 +205,30 @@ def changestate(request,id,state):
     order=Order.objects.get(id=id)
     print("Inside changestate")
     print("State is",state)
-    # state: 0=> processing   1=>cooked   2=>Delivering  3=>Delivered
+    # state: 0=> placed   1=>confirmed   2=>cooked  3=>Delivering  4=>Delivered
     if state==1:
-        order.status='cooked'
+        order.status='confirmed'
     elif state==2:
-        order.status='delivering'
+        order.status='cooked'
     elif state==3:
+        order.status='delivering'
+    elif state==4:
         order.status='delivered'
     else:
-        order.status='processing'
+        order.status='placed'
     order.save()
     return redirect(dashboard,id=request.user.id)
+
+def confirmation(request):
+    return render(request,"main/confirmation.html")
+
+def rollback(request, id):
+    if 'location' in request.session:
+        location=request.session['location']
+        if(location!=''):
+            request.session['location']=''
+            return redirect("/menu/food"+location)
+    request.session['location'] = str(id)
+    print("location is "+ request.session['location'] )
+    return redirect("/login/")
+

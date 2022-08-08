@@ -17,5 +17,7 @@ urlpatterns=[
     path("details/",views.details,name="details"),
     path("dashboard<int:id>/",views.dashboard,name="dashboard"),
     path("deleteorder<int:id>/",views.deleteorder,name="deleteorder"),
-    path("changestate<int:id>st<int:state>/",views.changestate,name="changestate")
+    path("changestate<int:id>st<int:state>/",views.changestate,name="changestate"),
+    path("confirmation/",views.confirmation,name="confirmation"),
+    path("rollback<int:id>/",views.rollback,name="rollback"),
 ]

@@ -35,7 +35,7 @@ class Order(models.Model):
     district=models.CharField(max_length=200,default='bhaktapur')
     town=models.CharField(max_length=200,default='thimi')
     area=models.CharField(max_length=200,default='main road')
-    status=models.CharField(max_length=50,default='processing')
+    status=models.CharField(max_length=50,default='placed')
 
 
 class UserDetails(models.Model):

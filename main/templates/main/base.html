@@ -41,8 +41,10 @@
     <link rel="stylesheet" href="{% static 'css/cart.css' %}">
     <link href=’https://fonts.googleapis.com/css?family=Sofia’ rel=’stylesheet’/>
     <link href="https://fonts.googleapis.com/css2?family=Beau+Rivage&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
     
+    <script src="https://kit.fontawesome.com/a3199218a9.js" crossorigin="anonymous"></script>
+
     <script src="{% static 'js/nav.js' %}"></script>
     {% block js %}
         <script></script>
@@ -51,17 +53,17 @@
 </head>
 <body>
     <nav class="navbar" id="navbar">
-        <div id="logo">Burger</div>
+        <div id="logo" style="margin-top:-30px;"><img src="{% static 'images/logo.png' %}" alt="John" style="width:45%; height:60px"></div>
         <ul class="navul">
             <li><a href="/" class="active">Home</a></li>
             <li><a href="/menu" id="url1">Our Menu</a></li>
             <li><a href="/#about" id="url2">About Us</a></li>
-            <li><a href="#" id="url3">Locate Us</a></li>
+            <li><a href="/#reviews" id="url3">Reviews</a></li>
         </ul>
         <div id="right_controls">
             <ul class="navul">
             {% if user.is_authenticated %}
-                <li><a class="white-link" href="/cart">Cart</a></li>
+                <li><a class="white-link" href="/cart"><i class="fas fa-shopping-cart"></i></a></li>
                 <li>
                     
                     <!-- Example single danger button -->
@@ -71,7 +73,7 @@
                         </button>
                         <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/dashboard{{request.user.id}}">Orders</a></li>
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <!-- <li><a class="dropdown-item" href="#">Profile</a></li> -->
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="/logout">Logout</a></li>
                         </ul>
@@ -79,9 +81,8 @@
                 </li>
                
             {% else %}    
-                <li><a class="white-link" href="/login">Login</a></li>
-                <li><a class="white-link" href="/login">Cart</a></li>
-                <li><a class="white-link" href="/register">Register</a></li>
+                <li><a class="white-link" id="wl1" href="/login">Login</a></li>
+                <li><a class="white-link" id="wl2" href="/register">Register</a></li>
             {% endif %}
         </ul></div>
     </nav>
@@ -94,7 +95,7 @@
     <footer class="footer">
         <div class="footer-content">
             <h3>Burgerhouse and Crunchy Fried Chicken</h3>
-            <p>Raj Template is a blog website where you will find great tutorials on web design and development. Here each tutorial is beautifully described step by step with the required source code.</p>
+            <p>Join us and experience the delicious foods of the largest growing fast food chain in Nepal.</p>
             <ul class="socials">
                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                 <li><a href="#"><i class="fa fa-twitter"></i></a></li>

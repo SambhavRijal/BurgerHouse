@@ -3,7 +3,35 @@
 
 {% block title %} Menu Page {% endblock %}
 
+{% block css %}
+        <style>
+            #content{
+                margin-top: 5%;
+            }
 
+            .navbar #right_controls .navul li .white-link{
+                color: black;
+            }
+
+            .navbar #right_controls .navul li .btn-group a{
+                color: black;
+            }
+
+        </style>
+    {% endblock %}
+
+    {% block js %}
+    <script>
+        var message='{{message}}';
+        var product='{{product}}';
+        if(message!=""){
+            //alert('{{ message }}');
+            var ok= alert("Added to Cart");
+            window.location.href = '/menu/food{{product}}';
+        }
+        
+    </script>
+{% endblock %}
 
 {% block content%}
     <p id="featured_title">Menu</p>
@@ -20,7 +48,7 @@
                 <div class="menu_itm_desc" style="margin-left: 3px; margin-right: 3px;">
                     <a href="food{{item.id}}" class="menu_desc"><span><p>{{item.name}}</p><p style="font-weight: 200; font-size: 17px; padding-top: 2px; color: grey; margin-top: -21px;">{{item.category}}</p></span> <span>Rs {{item.price}}</span></a>  
                 </div> 
-                <button class="cart_button"><a href="/addtocart{{item.id}}">Cart</a></button>   
+                <button class="cart_button"><a href="/addtocart{{item.id}}"><i class="fas fa-shopping-cart"></i></a></button>   
             </div>
             
             {% endfor %}

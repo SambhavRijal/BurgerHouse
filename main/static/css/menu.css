@@ -52,7 +52,7 @@
 }
 
 .menu_item:hover{
-    max-width: 30%;
+    box-shadow: 0 17px 30px 0 rgba(0, 0, 0, 0.2), 0 17px 30px 0 rgba(0, 0, 0, 0.19);
 }
 
 .menu_img{
@@ -66,6 +66,10 @@
     background-position: center;
     margin-bottom: 100px;
     
+}
+
+.menu_img:hover{
+    box-shadow: 0 8px 14px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .img{
@@ -105,11 +109,11 @@
     border: none;
     border-radius: 50px;
     height: 7vh;
-    background-color: rgba(255, 68, 0, 0.973);
+    background-color: rgba(247, 8, 8, 0.973);
     color: wheat;
-    font-size: 20px;
+    font-size: 22px;
     transition: 0.2s;
-    padding: 3px;
+    padding: 10px;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -117,8 +121,8 @@
 }
 
 .cart_button:hover{
-    background-color: rgb(184, 75, 11);
-    font-size: 22px;
+    background-color: rgb(194, 37, 37);
+    font-size: 25px;
 }
 
 .cart_button a{
